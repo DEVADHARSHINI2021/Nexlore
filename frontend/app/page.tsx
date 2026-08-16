@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 
 const STAGES = {
   connecting: { label: "Connecting", emoji: "🔌" },
@@ -19,7 +20,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!topic.trim()) return;
 
@@ -81,11 +82,9 @@ export default function Home() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-
-  const stage = STAGES[status];
-
+  const stage = STAGES[status as keyof typeof STAGES];
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 flex flex-col items-center justify-center p-4 sm:p-8">
+    <main className="min-h-screen bg-gradisent-to-br from-slate-950 via-indigo-950 to-slate-950 flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-3">
