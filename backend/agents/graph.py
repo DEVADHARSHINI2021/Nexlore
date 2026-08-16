@@ -45,28 +45,22 @@ Summary:"""
     state["summary"] = response.content
     return state
 
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import resend
+
+resend.api_key = settings.resend_api_key
 
 def email_node(state: dict) -> dict:
-    """Takes the summary from state, emails it via Gmail SMTP."""
+    """Takes the summary from state, emails it via Resend."""
     topic = state["topic"]
     summary = state["summary"]
-    recipient = state.get("recipient_email") or settings.email_address # default: email yourself
+    recipient = state.get("recipient_email") or settings.email_address
 
-    msg = MIMEMultipart()
-    msg["From"] = settings.email_address
-    msg["To"] = recipient
-    msg["Subject"] = f"Research Summary: {topic}"
-
-    body = f"Here's your research summary on '{topic}':\n\n{summary}"
-    msg.attach(MIMEText(body, "plain"))
-
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
-        server.starttls()
-        server.login(settings.email_address, settings.email_app_password)
-        server.send_message(msg)
+    resend.Emails.send({
+        "from": "Nexlore <onboarding@resend.dev>",
+        "to": [recipient],
+        "subject": f"Research Summary: {topic}",
+        "text": f"Here's your research summary on '{topic}':\n\n{summary}",
+    })
 
     state["email_sent"] = True
     return state

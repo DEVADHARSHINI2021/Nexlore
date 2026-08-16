@@ -9,3 +9,4 @@ pydantic==2.10.4
 langchain-google-genai==2.0.7
 pydantic-settings==2.7.0
 websockets==14.1
+resend==2.4.0
