@@ -8,7 +8,7 @@ app = FastAPI(title="AI Research Agent")
 # Allow the Next.js frontend (running on a different port) to call this API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js default dev port
+    allow_origins=["*"],  # Next.js default dev port
     allow_methods=["*"],
     allow_headers=["*"],
 )

@@ -31,7 +31,7 @@ export default function Home() {
 
     let ws;
     try {
-      ws = new WebSocket("ws://127.0.0.1:8000/ws/research");
+      ws = new WebSocket("wss://nexlore-backend.onrender.com/ws/research");
     } catch {
       setStatus("error");
       setMessage("Couldn't create a connection. Is the backend running?");
